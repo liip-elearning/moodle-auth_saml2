@@ -409,6 +409,19 @@ function auth_saml2_profile_get_custom_fields($onlyinuserobject = false) {
     return $fields;
 }
 
+/**
+ * Used for adminlib::set_updatedcallback which requires a string that resolves to a function.
+ *
+ * Refreshes the sp metadata as some metadata has been updated.
+ *
+ */
+function auth_saml2_update_sp_metadata() {
+    global $saml2auth;
+
+    // Remove the cached metadata so the next call will have the latest metadata.
+    $file = $saml2auth->certdir . $saml2auth->spname . '.xml';
+    @unlink($file);
+}
 
 // @codingStandardsIgnoreEnd
 
